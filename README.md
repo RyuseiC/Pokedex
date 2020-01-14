@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-![Alt text](/Pokedex/pokedex_preview.jpg?raw=true "Site Preview")
+![Alt text](/Pokedex/pokedex_preview.png?raw=true "Site Preview")
 
 ## Available Scripts
 
