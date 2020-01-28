@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Pokemon from '../Pokemon';
 import PokeList from './PokeList';
 import './styles/App.css';
-import DetailView from './DetailView';
+import PokeInfo from './PokeInfo';
 import PokeSearch from './PokeSearch';
 import PokeSort from './PokeSort';
 import pokemonList from '../../node_modules/pokemon-base-stats/node_modules/pokemon/data/en.json';
@@ -12,6 +12,7 @@ class App extends Component {
     super();
     this.state = {
       pokemon: {},
+      pokemonSpecies: {},
       pokeSearch: '',
       pokeSort: 'Sort by Ascending ID',
     };
@@ -21,16 +22,25 @@ class App extends Component {
     this.pokemonFilter = this.pokemonFilter.bind(this);
     this.onPokeSortChange = this.onPokeSortChange.bind(this);
     this.pokemonSort = this.pokemonSort.bind(this);
+    this.updatePokemon = this.updatePokemon.bind(this);
   }
 
   handleOnClick(id) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-      .then(res => res.json())
+      .then(response => response.json())
       .then(data => {
         const pokemon = new Pokemon(data);
         this.setState({ pokemon });
 
+        console.log(data);
         console.log(pokemon);
+      })
+      .catch(err => console.log(err));
+
+      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ pokemonSpecies: data })
       })
       .catch(err => console.log(err));
   }
@@ -39,8 +49,8 @@ class App extends Component {
     this.setState({ pokeSearch: value });
   }
 
-  onPokeSortChange(event) {
-    this.setState({ pokeSort: event });
+  onPokeSortChange(value) {
+    this.setState({ pokeSort: value });
   }
 
   pokemonSort(pokemon1, pokemon2) {
@@ -54,12 +64,11 @@ class App extends Component {
     }
 
     if (pokeSort === 'Sort A-Z') {
-      return (pokemon1.name > pokemon2.name) ? 1 : ((pokemon2.name > pokemon1.name) ? -1 : 0);
-      
+      return pokemon1.name > pokemon2.name ? 1 : pokemon2.name > pokemon1.name ? -1 : 0;
     }
 
     if (pokeSort === 'Sort Z-A') {
-      return (pokemon2.name > pokemon1.name) ? 1 : ((pokemon1.name > pokemon2.name) ? -1 : 0);
+      return pokemon2.name > pokemon1.name ? 1 : pokemon1.name > pokemon2.name ? -1 : 0;
     }
   }
 
@@ -73,19 +82,40 @@ class App extends Component {
     return matchesName || matchesId;
   }
 
+  updatePokemon(id, formeIndex) {
+    const newPokemonURL = this.state.pokemonSpecies.varieties[formeIndex].pokemon.url;
+    console.log('newPokemonURL :', newPokemonURL);
+        fetch(newPokemonURL)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            const newPokemon = new Pokemon(data);
+            console.log(newPokemon);
+            this.setState({ pokemon: newPokemon });
+          })
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div className="App">
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/RyuseiC/Pokedex">
+          About
+        </a>
         <header>Pokédex</header>
-        <PokeSearch value={this.state.pokeSearch} onChange={this.onPokeSearchChange} />
-        <PokeSort value={this.state.pokeSort} onChange={this.onPokeSortChange} />
+        <PokeSearch onChange={this.onPokeSearchChange} />
+        <PokeSort onChange={this.onPokeSortChange} />
         <br></br>
         <PokeList
           sortPokemon={this.pokemonSort}
           filterByPokemon={this.pokemonFilter}
           handleOnClick={this.handleOnClick}
         />
-        <DetailView pokemon={this.state.pokemon} />
+        <PokeInfo
+          pokemon={this.state.pokemon}
+          pokemonSpecies={this.state.pokemonSpecies}
+          updatePokemon={this.updatePokemon}
+        />
       </div>
     );
   }

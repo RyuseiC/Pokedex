@@ -15,12 +15,14 @@ class PokeSort extends React.Component {
       height: "30px",
       width: "25%",
       fontSize: "18px",
+      backgroundColor: "white",
       border: "2px solid rgb(235, 27, 42)",
-      borderRadius: "10px",
+      borderRadius: "5px",
+      verticalAlign: "top",
       outline: "none",
     }
     return (
-      <select style={style} value={this.props.value} onChange={this.handleOnChange}>
+      <select style={style} onChange={this.handleOnChange}>
         <option value='Sort by Ascending ID'>Sort by Ascending ID</option>
         <option value='Sort by Descending ID'>Sort by Descending ID</option>
         <option value='Sort A-Z'>Sort A-Z</option>
