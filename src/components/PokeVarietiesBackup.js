@@ -1,9 +1,8 @@
 import React from 'react';
-import Tabs from './Tabs';
 import './styles/PokeVarieties.css';
 const pokemon = require('pokemon-base-stats/node_modules/pokemon');
 
-class PokeVarieties extends React.Component {
+class Tabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,43 +21,43 @@ class PokeVarieties extends React.Component {
   }
 
   componentDidMount() {
-    // var currentForme = document.getElementsByClassName('forme-tab')[0];
-    // var currentAppearance = document.getElementsByClassName('appearance-tab')[0];
+    var currentForme = document.getElementsByClassName('forme-tab')[0];
+    var currentAppearance = document.getElementsByClassName('appearance-tab')[0];
 
-    // var formeTabs = Array.from(document.getElementsByClassName('forme-tab'));
-    // var appearanceTabs = Array.from(document.getElementsByClassName('appearance-tab'));
+    var formeTabs = Array.from(document.getElementsByClassName('forme-tab'));
+    var appearanceTabs = Array.from(document.getElementsByClassName('appearance-tab'));
 
-    // formeTabs.forEach(forme => forme.className.replace(' active', ''));
-    // currentForme.className += ' active';
+    formeTabs.forEach(forme => forme.className.replace(' active', ''));
+    currentForme.className += ' active';
 
-    // appearanceTabs.forEach(appearance => appearance.className.replace(' active', ''));
-    // currentAppearance.className += ' active';
+    appearanceTabs.forEach(appearance => appearance.className.replace(' active', ''));
+    currentAppearance.className += ' active';
   }
 
   componentDidUpdate(prevProps) {
-    // if (prevProps.hp !== this.props.hp) {
-    //   this.setState({ forme: this.props.formes[0] });
-    //   this.setState({ sprite: `https://projectpokemon.org/images/normal-sprite/${this.props.name
-    //   .toLowerCase()
-    //   .replace(/\s/g, '')
-    //   .replace(':', '')}.gif` });
+    if (prevProps.hp !== this.props.hp) {
+      this.setState({ forme: this.props.formes[0] });
+      this.setState({ sprite: `https://projectpokemon.org/images/normal-sprite/${this.props.name
+      .toLowerCase()
+      .replace(/\s/g, '')
+      .replace(':', '')}.gif` });
 
-    //   var currentForme = document.getElementsByClassName("forme-tab")[0];
-    //   var currentAppearance = document.getElementsByClassName("appearance-tab")[0];
+      var currentForme = document.getElementsByClassName("forme-tab")[0];
+      var currentAppearance = document.getElementsByClassName("appearance-tab")[0];
   
-    //   var formeTabs = document.getElementsByClassName("forme-tab");
-    //   var appearanceTabs = document.getElementsByClassName("appearance-tab");
+      var formeTabs = document.getElementsByClassName("forme-tab");
+      var appearanceTabs = document.getElementsByClassName("appearance-tab");
   
-    //   for (let i = 0; i < formeTabs.length; i++) {
-    //     formeTabs[i].className = formeTabs[i].className.replace(" active", "");
-    //   }
-    //   currentForme.className += " active";
+      for (let i = 0; i < formeTabs.length; i++) {
+        formeTabs[i].className = formeTabs[i].className.replace(" active", "");
+      }
+      currentForme.className += " active";
   
-    //   for (let i = 0; i < appearanceTabs.length; i++) {
-    //     appearanceTabs[i].className = appearanceTabs[i].className.replace(" active", "");
-    //   }
-    //   currentAppearance.className += " active";
-    // }
+      for (let i = 0; i < appearanceTabs.length; i++) {
+        appearanceTabs[i].className = appearanceTabs[i].className.replace(" active", "");
+      }
+      currentAppearance.className += " active";
+    }
 
   }
 
@@ -124,6 +123,18 @@ class PokeVarieties extends React.Component {
   render() {
     return (
       <div className="pokemon-varieties">
+        <div className="forme-tabs">
+          {this.props.formes.map(forme => (
+            <button
+              className="forme-tab"
+              id={forme}
+              key={forme}
+              onClick={event => this.handleFormeTabClick(event.target.id)}
+            >
+              {forme.replace('-', ' ')}
+            </button>
+          ))}
+        </div>
         <div className="appearance-tabs">
           {this.props.innerTabs.map(({ appearance }) => {
             return (
@@ -150,4 +161,4 @@ class PokeVarieties extends React.Component {
   }
 }
 
-export default PokeVarieties;
+export default Tabs;

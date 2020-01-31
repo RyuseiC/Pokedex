@@ -1,0 +1,27 @@
+.tab-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.tabs {
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.tab {
+  padding: 0px 20px;
+}
+
+.tab:hover {
+  cursor: pointer;
+}
+
+.tab-content {
+  /* display: flex; */
+  /* align-self: flex-right; */
+}
+
+.active-tab {
+  background-color: gainsboro;
+}

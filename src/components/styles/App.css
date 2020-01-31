@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.poke-container {
+  display: flex;
+  flex-direction: row;
+}
+
 
 body {
   margin: 0;

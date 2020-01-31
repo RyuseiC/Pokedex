@@ -6,12 +6,14 @@ import PokeInfo from './PokeInfo';
 import PokeSearch from './PokeSearch';
 import PokeSort from './PokeSort';
 import pokemonList from '../../node_modules/pokemon-base-stats/node_modules/pokemon/data/en.json';
+import Axios from 'axios';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       pokemon: {},
+      pokemonForms: [],
       pokemonSpecies: {},
       pokeSearch: '',
       pokeSort: 'Sort by Ascending ID',
@@ -37,10 +39,20 @@ class App extends Component {
       })
       .catch(err => console.log(err));
 
-      fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
       .then(response => response.json())
       .then(data => {
-        this.setState({ pokemonSpecies: data })
+        const varieties = data.varieties;
+        const pokemonDataPromises = varieties.map(({ pokemon: { url } }) => {
+          return Axios.get(url);
+        });
+
+        Promise.all(pokemonDataPromises).then(pokemonResponses => {
+          const pokemonForms = pokemonResponses.map(resp => new Pokemon(resp.data));
+          this.setState({ pokemonForms });
+        });
+
+        this.setState({ pokemonSpecies: data });
       })
       .catch(err => console.log(err));
   }
@@ -85,18 +97,19 @@ class App extends Component {
   updatePokemon(id, formeIndex) {
     const newPokemonURL = this.state.pokemonSpecies.varieties[formeIndex].pokemon.url;
     console.log('newPokemonURL :', newPokemonURL);
-        fetch(newPokemonURL)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            const newPokemon = new Pokemon(data);
-            console.log(newPokemon);
-            this.setState({ pokemon: newPokemon });
-          })
+    fetch(newPokemonURL)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        const newPokemon = new Pokemon(data);
+        console.log(newPokemon);
+        this.setState({ pokemon: newPokemon });
+      })
       .catch(err => console.log(err));
   }
 
   render() {
+    console.log(JSON.stringify());
     return (
       <div className="App">
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/RyuseiC/Pokedex">
@@ -106,16 +119,19 @@ class App extends Component {
         <PokeSearch onChange={this.onPokeSearchChange} />
         <PokeSort onChange={this.onPokeSortChange} />
         <br></br>
-        <PokeList
-          sortPokemon={this.pokemonSort}
-          filterByPokemon={this.pokemonFilter}
-          handleOnClick={this.handleOnClick}
-        />
-        <PokeInfo
-          pokemon={this.state.pokemon}
-          pokemonSpecies={this.state.pokemonSpecies}
-          updatePokemon={this.updatePokemon}
-        />
+        <div className="poke-container">
+          <PokeList
+            sortPokemon={this.pokemonSort}
+            filterByPokemon={this.pokemonFilter}
+            handleOnClick={this.handleOnClick}
+          />
+          <PokeInfo
+            pokemon={this.state.pokemon}
+            pokemonForms={this.state.pokemonForms}
+            pokemonSpecies={this.state.pokemonSpecies}
+            updatePokemon={this.updatePokemon}
+          />
+        </div>
       </div>
     );
   }

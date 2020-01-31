@@ -1,14 +1,12 @@
 .pokemon-info {
   width: 50%;
   height: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
   background-color: rgb(235, 27, 42);
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  display: inline-block;
+  /* display: inline-block;
   overflow: scroll;
-  position: visible;
+  position: visible; */
 }
 
 .data-wrapper {
