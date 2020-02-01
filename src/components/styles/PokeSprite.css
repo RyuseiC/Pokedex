@@ -37,21 +37,16 @@
 }
 
 .forme-tabs {
-  height: 30px;
   background-color: #424242;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   display: flex;
-  align-items: center;
-  position: absolute;
-  float: left;
   top: 90px;
 }
 
 .forme-tabs .tab-container{
   color: #fff;
   background-color: inherit;
-  float: left;
   border: none;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;

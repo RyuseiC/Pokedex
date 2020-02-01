@@ -7,6 +7,8 @@ import PokeSearch from './PokeSearch';
 import PokeSort from './PokeSort';
 import pokemonList from '../../node_modules/pokemon-base-stats/node_modules/pokemon/data/en.json';
 import Axios from 'axios';
+import { pokeClasses } from '../PokeClasses';
+
 
 class App extends Component {
   constructor() {
@@ -86,9 +88,8 @@ class App extends Component {
 
   pokemonFilter({ id }) {
     const { pokeSearch } = this.state;
-    const pokemon = pokemonList[id - 1];
-
-    const matchesName = pokemon.toLowerCase().includes(pokeSearch.toLowerCase());
+    const pokemon = pokeClasses[id - 1];
+    const matchesName = pokemon.name.toLowerCase().includes(pokeSearch.toLowerCase());
     const matchesId = id.toString() === pokeSearch;
 
     return matchesName || matchesId;

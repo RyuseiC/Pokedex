@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import "./styles/Tabs.css";
 
-const Tabs = ({ tabItems }) => {
+const Tabs = ({ tabItems = [] }) => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
+  if (tabItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="tab-container">
@@ -19,7 +24,9 @@ const Tabs = ({ tabItems }) => {
           );
         })}
       </div>
-      <div className="tab-content">{tabItems[selectedTabIndex] && tabItems[selectedTabIndex].tabContent}</div>
+      <div className="tab-content">
+        {tabItems[selectedTabIndex] && tabItems[selectedTabIndex].tabContent}
+      </div>
     </div>
   );
 };

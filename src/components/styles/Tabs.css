@@ -1,7 +1,8 @@
 .tab-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
+  width: 100%;
 }
 
 .tabs {
@@ -18,8 +19,7 @@
 }
 
 .tab-content {
-  /* display: flex; */
-  /* align-self: flex-right; */
+  width: 100%;
 }
 
 .active-tab {
