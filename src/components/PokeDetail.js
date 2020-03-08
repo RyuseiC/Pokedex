@@ -1,7 +1,7 @@
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
 
-const PokeDetail = ({pokemon}) => {
+const PokeDetail = ({ pokemon }) => {
   const {
     id,
     name,
@@ -15,7 +15,6 @@ const PokeDetail = ({pokemon}) => {
     sp_atk,
     sp_def,
     speed,
-    formes,
   } = pokemon;
 
   const stats = {
@@ -94,20 +93,97 @@ const PokeDetail = ({pokemon}) => {
     borderRadius: '50px',
     margin: '5px',
   };
-  
+
+  const convertID = () => {
+    if (id > 10000) {
+      var splitBySlash = pokemon.species.url.split('/');
+      return splitBySlash[splitBySlash.length - 2];
+    }
+    return id;
+  };
+
+  const convertName = () => {
+    if (name.includes('mega-x')) {
+      return `mega ${pokemon.species.name} x`;
+    } else if (name.includes('mega-y')) {
+      return `mega ${pokemon.species.name} y`;
+    } else if (name.includes('mega')) {
+      return `mega ${pokemon.species.name}`;
+    } else if (name.includes('primal')) {
+      return `primal ${pokemon.species.name}`;
+    } else if (name.includes('totem') && !name.includes('disguised') && !name.includes('busted')) {
+      return `totem ${pokemon.species.name}`;
+    } else if (name.includes('alola')) {
+      return `alolan ${pokemon.species.name}`;
+    } else if (name.includes('nidoran-f')) {
+      return 'nidoran♀';
+    } else if (name.includes('nidoran-m')) {
+      return 'nidoran♂';
+    } else if (name === 'mr-mime') {
+      return 'mr. mime';
+    } else if (name === 'mime-jr.') {
+      return 'mime jr.';
+    } else if (name === 'kyurem-black') {
+      return `black ${pokemon.species.name}`;
+    } else if (name === 'kyurem-white') {
+      return `white ${pokemon.species.name}`;
+    } else if (name === 'zygarde') {
+      return 'zygarde (50% forme)';
+    } else if (name === 'zygarde-10') {
+      return 'zygarde (10% forme)';
+    } else if (name === 'type-null') {
+      return 'type: null';
+    } else if (name.includes('tapu')) {
+      return name.replace('-', ' ');
+    } else if (name === 'necrozma-dusk-mane') {
+      return `dusk mane ${pokemon.species.name}`;
+    } else if (name === 'necrozma-dawn-wings') {
+      return `dawn wings ${pokemon.species.name}`;
+    } else if (name.includes('ultra')) {
+      return `ultra ${pokemon.species.name}`;
+    } else if (
+      name.includes('-') &&
+      name !== 'ho-oh' &&
+      name !== 'porygon-z' &&
+      name !== 'jangmo-o' &&
+      name !== 'hakamo-o'
+    ) {
+      var forme = name.split(pokemon.species.name).pop();
+      return name.replace(forme, ` (${forme.substring(1)} forme)`);
+    } return name;
+  };
+
+  const convertHeight = () => {
+    var meters = (height * 0.1).toFixed(2);
+    var feet = (meters * 3.28084).toFixed(2);
+    return `${meters}m / ${feet} ft`;
+  };
+
+  const convertWeight = () => {
+    var kilograms = (weight * 0.1).toFixed(2);
+    var pounds = (kilograms * 2.205).toFixed(2);
+    return `${kilograms} kg / ${pounds} lbs`;
+  };
+
   return (
     <div className="data-wrapper">
-      <h1 className="data-id">No. {id}</h1>
-      <h2 className="data-name">Name: {name}</h2>
-      <p className="data-height">Height: {Math.round(height * 0.1)}m</p>
-      <p className="data-weight">Weight: {Math.round(weight * 0.1)} kg</p>
+      <h1 className="data-id">No. {convertID()}</h1>
+      <h2 className="data-name">Name: {convertName()}</h2>
+      <p className="data-height">Height: {convertHeight()}</p>
+      <p className="data-weight">Weight: {convertWeight()}</p>
       {/* <p className="data-description">Description: {description}</p> */}
       <div className="data-type">
         Type:
-        <p className="type" style={Object.assign({}, typeStyle, { backgroundColor: typeColor[type] })}>
+        <p
+          className="type"
+          style={Object.assign({}, typeStyle, { backgroundColor: typeColor[type] })}
+        >
           {type}
         </p>
-        <p className="type2" style={Object.assign({}, typeStyle, { backgroundColor: typeColor[type2] })}>
+        <p
+          className="type2"
+          style={Object.assign({}, typeStyle, { backgroundColor: typeColor[type2] })}
+        >
           {type2}
         </p>
       </div>

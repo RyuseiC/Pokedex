@@ -5,7 +5,6 @@ import './styles/App.css';
 import PokeInfo from './PokeInfo';
 import PokeSearch from './PokeSearch';
 import PokeSort from './PokeSort';
-import pokemonList from '../../node_modules/pokemon-base-stats/node_modules/pokemon/data/en.json';
 import Axios from 'axios';
 import { pokeClasses } from '../PokeClasses';
 
@@ -36,8 +35,8 @@ class App extends Component {
         const pokemon = new Pokemon(data);
         this.setState({ pokemon });
 
-        console.log(data);
-        console.log(pokemon);
+        // console.log(data);
+        // console.log(pokemon);
       })
       .catch(err => console.log(err));
 
@@ -51,6 +50,7 @@ class App extends Component {
 
         Promise.all(pokemonDataPromises).then(pokemonResponses => {
           const pokemonForms = pokemonResponses.map(resp => new Pokemon(resp.data));
+          // console.log(pokemonForms);
           this.setState({ pokemonForms });
         });
 
@@ -95,7 +95,7 @@ class App extends Component {
     return matchesName || matchesId;
   }
 
-  updatePokemon(id, formeIndex) {
+  updatePokemon(formeIndex) {
     const newPokemonURL = this.state.pokemonSpecies.varieties[formeIndex].pokemon.url;
     console.log('newPokemonURL :', newPokemonURL);
     fetch(newPokemonURL)
@@ -110,7 +110,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(JSON.stringify());
+    // console.log(JSON.stringify());
     return (
       <div className="App">
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/RyuseiC/Pokedex">

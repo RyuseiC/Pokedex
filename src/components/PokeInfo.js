@@ -1,10 +1,10 @@
-import React from "react";
-import "./styles/PokeInfo.css";
-import PokeSprite from "./PokeSprite";
-import PokeDetail from "./PokeDetail";
-import Tabs from "./Tabs";
+import React from 'react';
+import './styles/PokeInfo.css';
+import PokeSprite from './PokeSprite';
+import PokeDetail from './PokeDetail';
+import Tabs from './Tabs';
 
-const PokeInfo = ({ pokemon, updatePokemon, pokemonForms = [], pokemonSpecies }) => {
+const PokeInfo = ({ pokemon, pokemonForms = [] }) => {
   if (!pokemon.id) {
     return (
       <section className="pokemon-info">
@@ -14,32 +14,80 @@ const PokeInfo = ({ pokemon, updatePokemon, pokemonForms = [], pokemonSpecies })
     );
   }
 
-  const appearances = ["Normal", "Shiny"];
+  const appearances = ['Normal', 'Shiny'];
 
-  const tabItems = pokemonForms.map(pokemon => {
-    const pokemonName = pokemon.name
-      .replace("mega-x", "megax")
-      .replace("mega-y", "megay");
+  const tabItems = pokemonForms
+    .filter(
+      form =>
+        !form.name.includes('battle-bond') &&
+        !form.name.includes('ash') &&
+        !form.name.includes('50') &&
+        !form.name.includes('own-tempo')
+    )
+    .map(pokemon => {
+      const pokemonName = pokemon.name
+        .replace('totem-alola', 'totem')
+        .replace('nidoran-', 'nidoran_')
+        .replace('mr-mime', 'mr.mime')
+        .replace('deoxys-normal', 'deoxys')
+        .replace('wormadam-plant', 'wormadam')
+        .replace('mime-jr', 'mime_jr')
+        .replace('giratina-altered', 'giratina')
+        .replace('shaymin-land', 'shaymin')
+        .replace('basculin-red-striped', 'basculin')
+        .replace('basculin-blue-striped', 'basculin-blue')
+        .replace('darmanitan-standard', 'darmanitan')
+        .replace('-incarnate', '')
+        .replace('keldeo-ordinary', 'keldeo')
+        .replace('meloetta-aria', 'meloetta')
+        .replace('meowstic-male', 'meowstic')
+        .replace('meowstic-female', 'meowstic-f')
+        .replace('aegislash-shield', 'aegislash')
+        .replace('pumpkaboo-average', 'pumpkaboo')
+        .replace('gourgeist-average', 'gourgeist')
+        .replace('oricorio-baile', 'oricorio')
+        .replace('oricorio-pom-pom', 'oricorio-pompom')
+        .replace('lycanroc-midday', 'lycanroc')
+        .replace("type-null", "typenull")
+        .replace("minior-red-meteor", "minior")
+        .replace("-meteor", "")
+        .replace("mimikyu-disguised", "mimikyu")
+        .replace("totem-disguised", "totem")
+        .replace("tapu-", "tapu")
+        .replace("necrozma-dusk", "necrozma-dusk-mane")
+        .replace("necrozma-dawn", "necrozma-dawn-wings")
+        .replace('mega-x', 'megax')
+        .replace('mega-y', 'megay');
 
-    const varietyContents = appearances.map(appearance => {
-      const PokeSpriteContent = (
-        <PokeSprite name={pokemonName} appearance={appearance.toLowerCase()} />
+      const formName =
+        pokemon.name === pokemon.species.name || (pokemon.name === pokemonForms[0].name && !pokemon.name.includes("totem" && "original"))
+          ? 'default'
+          : pokemon.name
+              .replace(pokemon.species.name + '-', '')
+              .replace('-', ' ')
+              .replace('totem alola', 'totem')
+              .replace('10', '10%')
+              .replace("meteor", "");
+
+      const varietyContents = appearances.map(appearance => {
+        const PokeSpriteContent = (
+          <PokeSprite name={pokemonName} appearance={appearance.toLowerCase()} />
+        );
+        return { label: appearance, tabContent: PokeSpriteContent };
+      });
+
+      const PokemonThing = (
+        <div>
+          <Tabs tabItems={varietyContents} />
+          <PokeDetail pokemon={pokemon} />
+        </div>
       );
-      return {label: appearance, tabContent: PokeSpriteContent};
+      return { label: formName, tabContent: PokemonThing };
     });
-
-    const PokemonThing = (
-      <div>
-        <Tabs tabItems={varietyContents} />
-        <PokeDetail pokemon={pokemon} />
-      </div>
-    );
-    return { label: pokemon.name, tabContent: PokemonThing };
-  });
 
   return (
     <section className="pokemon-info" key={pokemon}>
-      <div className="forme-tabs">
+      <div className="variety-tabs">
         <Tabs tabItems={tabItems} />
       </div>
     </section>
