@@ -20,6 +20,8 @@ class PokeSort extends React.Component {
       borderRadius: "5px",
       verticalAlign: "top",
       outline: "none",
+      position: "sticky",
+      top: "0"
     }
     return (
       <select style={style} onChange={this.handleOnChange}>

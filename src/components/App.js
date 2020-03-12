@@ -25,7 +25,6 @@ class App extends Component {
     this.pokemonFilter = this.pokemonFilter.bind(this);
     this.onPokeSortChange = this.onPokeSortChange.bind(this);
     this.pokemonSort = this.pokemonSort.bind(this);
-    this.updatePokemon = this.updatePokemon.bind(this);
   }
 
   handleOnClick(id) {
@@ -34,9 +33,6 @@ class App extends Component {
       .then(data => {
         const pokemon = new Pokemon(data);
         this.setState({ pokemon });
-
-        // console.log(data);
-        // console.log(pokemon);
       })
       .catch(err => console.log(err));
 
@@ -50,7 +46,6 @@ class App extends Component {
 
         Promise.all(pokemonDataPromises).then(pokemonResponses => {
           const pokemonForms = pokemonResponses.map(resp => new Pokemon(resp.data));
-          // console.log(pokemonForms);
           this.setState({ pokemonForms });
         });
 
@@ -95,22 +90,13 @@ class App extends Component {
     return matchesName || matchesId;
   }
 
-  updatePokemon(formeIndex) {
-    const newPokemonURL = this.state.pokemonSpecies.varieties[formeIndex].pokemon.url;
-    console.log('newPokemonURL :', newPokemonURL);
-    fetch(newPokemonURL)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        const newPokemon = new Pokemon(data);
-        console.log(newPokemon);
-        this.setState({ pokemon: newPokemon });
-      })
-      .catch(err => console.log(err));
+  cry(name) {
+    const url = `https://play.pokemonshowdown.com/audio/cries/${name}.ogg`
+    console.log('url :', url);
+    new Audio(url).play();
   }
 
   render() {
-    // console.log(JSON.stringify());
     return (
       <div className="App">
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/RyuseiC/Pokedex">
@@ -130,7 +116,7 @@ class App extends Component {
             pokemon={this.state.pokemon}
             pokemonForms={this.state.pokemonForms}
             pokemonSpecies={this.state.pokemonSpecies}
-            updatePokemon={this.updatePokemon}
+            cry={this.cry}
           />
         </div>
       </div>

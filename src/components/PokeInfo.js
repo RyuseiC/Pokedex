@@ -4,7 +4,7 @@ import PokeSprite from './PokeSprite';
 import PokeDetail from './PokeDetail';
 import Tabs from './Tabs';
 
-const PokeInfo = ({ pokemon, pokemonForms = [] }) => {
+const PokeInfo = ({ pokemon, pokemonForms = [], pokemonSpecies, cry }) => {
   if (!pokemon.id) {
     return (
       <section className="pokemon-info">
@@ -60,18 +60,19 @@ const PokeInfo = ({ pokemon, pokemonForms = [] }) => {
         .replace('mega-y', 'megay');
 
       const formName =
-        pokemon.name === pokemon.species.name || (pokemon.name === pokemonForms[0].name && !pokemon.name.includes("totem" && "original"))
+        pokemon.name === pokemon.species.name || (pokemon.name === pokemonForms[0].name && !pokemon.name.includes("totem") && !pokemon.name.includes("original"))
           ? 'default'
           : pokemon.name
               .replace(pokemon.species.name + '-', '')
               .replace('-', ' ')
               .replace('totem alola', 'totem')
               .replace('10', '10%')
-              .replace("meteor", "");
+              .replace("meteor", "")
+              .replace(":", "");
 
       const varietyContents = appearances.map(appearance => {
         const PokeSpriteContent = (
-          <PokeSprite name={pokemonName} appearance={appearance.toLowerCase()} />
+          <PokeSprite name={pokemonName} appearance={appearance.toLowerCase()} cry={cry} />
         );
         return { label: appearance, tabContent: PokeSpriteContent };
       });
@@ -79,7 +80,7 @@ const PokeInfo = ({ pokemon, pokemonForms = [] }) => {
       const PokemonThing = (
         <div>
           <Tabs tabItems={varietyContents} />
-          <PokeDetail pokemon={pokemon} />
+          <PokeDetail pokemon={pokemon} pokemonSpecies={pokemonSpecies} />
         </div>
       );
       return { label: formName, tabContent: PokemonThing };

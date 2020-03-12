@@ -1,7 +1,7 @@
 import React from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
 
-const PokeDetail = ({ pokemon }) => {
+const PokeDetail = ({ pokemon, pokemonSpecies }) => {
   const {
     id,
     name,
@@ -16,6 +16,18 @@ const PokeDetail = ({ pokemon }) => {
     sp_def,
     speed,
   } = pokemon;
+
+  console.log('pokemonSpecies :', pokemonSpecies);
+  var description = '';
+  const descriptions = pokemonSpecies.flavor_text_entries;
+
+  for (let i = 0; i < descriptions.length; i++) {
+    if (descriptions[i].language.name === 'en') {
+      console.log('flavor_text_entry :', descriptions[i].flavor_text);
+      description += descriptions[i].flavor_text;
+      break;
+    }
+  }
 
   const stats = {
     type: 'HorizontalBar',
@@ -121,8 +133,10 @@ const PokeDetail = ({ pokemon }) => {
       return 'nidoran♂';
     } else if (name === 'mr-mime') {
       return 'mr. mime';
-    } else if (name === 'mime-jr.') {
+    } else if (name === 'mime-jr') {
       return 'mime jr.';
+    } else if (name === 'porygon2') {
+      return 'porygon 2';
     } else if (name === 'kyurem-black') {
       return `black ${pokemon.species.name}`;
     } else if (name === 'kyurem-white') {
@@ -135,9 +149,9 @@ const PokeDetail = ({ pokemon }) => {
       return 'type: null';
     } else if (name.includes('tapu')) {
       return name.replace('-', ' ');
-    } else if (name === 'necrozma-dusk-mane') {
+    } else if (name === 'necrozma-dusk') {
       return `dusk mane ${pokemon.species.name}`;
-    } else if (name === 'necrozma-dawn-wings') {
+    } else if (name === 'necrozma-dawn') {
       return `dawn wings ${pokemon.species.name}`;
     } else if (name.includes('ultra')) {
       return `ultra ${pokemon.species.name}`;
@@ -146,11 +160,13 @@ const PokeDetail = ({ pokemon }) => {
       name !== 'ho-oh' &&
       name !== 'porygon-z' &&
       name !== 'jangmo-o' &&
-      name !== 'hakamo-o'
+      name !== 'hakamo-o' &&
+      name !== 'kommo-o'
     ) {
       var forme = name.split(pokemon.species.name).pop();
       return name.replace(forme, ` (${forme.substring(1)} forme)`);
-    } return name;
+    }
+    return name;
   };
 
   const convertHeight = () => {
@@ -171,7 +187,7 @@ const PokeDetail = ({ pokemon }) => {
       <h2 className="data-name">Name: {convertName()}</h2>
       <p className="data-height">Height: {convertHeight()}</p>
       <p className="data-weight">Weight: {convertWeight()}</p>
-      {/* <p className="data-description">Description: {description}</p> */}
+      <p className="data-description">Description: {description}</p>
       <div className="data-type">
         Type:
         <p

@@ -20,6 +20,8 @@ class PokeSearch extends React.Component {
       veticalAlign: "top",
       paddingLeft: "10px",
       outline: "none",
+      position: "sticky",
+      top: "0"
     }
     return (
       <input placeholder="Search by Name or ID" style={style} onChange={this.handleOnChange}></input>

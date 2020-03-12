@@ -1,13 +1,10 @@
 import React from "react";
 import "./styles/PokeSprite.css";
 
-const PokeSprite = ({ name, appearance }) => {
-  const spriteName = name
-    .toLowerCase()
-    .replace(/\s/g, "")
-    .replace(":", "");
-
-  const spriteUrl = `https://projectpokemon.org/images/${appearance}-sprite/${spriteName}.gif`;
+const PokeSprite = ({ name, appearance, cry }) => {
+  name = name.replace(/\s/g, "").toLowerCase();
+  
+  const spriteUrl = `https://projectpokemon.org/images/${appearance}-sprite/${name}.gif`;
   return (
     <div className="pokemon-sprite">
       <div className="sprite">
@@ -15,6 +12,7 @@ const PokeSprite = ({ name, appearance }) => {
           id="pokemon-sprite"
           src={spriteUrl}
           alt={`${name}.gif`}
+          onClick={() => cry(name)}
         />
       </div>
     </div>
