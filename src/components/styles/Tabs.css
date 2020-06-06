@@ -1,6 +1,6 @@
 .tabs {
   display: inline-flex;
-  border-bottom: solid black 1px;
+  border-bottom: solid #424242 1px;
   overflow: scroll;
 }
 

@@ -11,6 +11,7 @@ class Pokemon {
     } else this.type2 = null;
     
     this.species = data.species;
+    this.abilities = data.abilities;
     this.hp = data.stats[5].base_stat;
     this.attack = data.stats[4].base_stat;
     this.defense = data.stats[3].base_stat;

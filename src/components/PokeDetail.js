@@ -9,6 +9,7 @@ const PokeDetail = ({ pokemon, pokemonSpecies }) => {
     weight,
     type,
     type2,
+    abilities,
     hp,
     attack,
     defense,
@@ -181,6 +182,12 @@ const PokeDetail = ({ pokemon, pokemonSpecies }) => {
     return `${kilograms} kg / ${pounds} lbs`;
   };
 
+  var abilityList = [];
+  for (let i = 0; i < abilities.length; i++) {
+    abilityList[i] = abilities[i].ability.name;
+    console.log('abilities[i].name :', abilities[i].ability.name);
+  }
+
   return (
     <div className="data-wrapper">
       <h1 className="data-id">No. {convertID()}</h1>
@@ -203,6 +210,7 @@ const PokeDetail = ({ pokemon, pokemonSpecies }) => {
           {type2}
         </p>
       </div>
+      <p className="data-abilities">Abilities: {abilityList.join(", ")}</p>
       <div className="data-stats">
         <HorizontalBar data={stats} options={options} height={150} />
       </div>

@@ -3,7 +3,7 @@
   height: 100vh;
   background-color: rgb(235, 27, 42);
   display: inline-block;
-  overflow: scroll;
+  overflow-y: scroll;
   border-radius: 5px;
 }
 
@@ -28,4 +28,16 @@
   font-size: 20px;
   text-transform: capitalize;
   font-style: bold;
+}
+
+.data-abilities {
+  text-transform: capitalize;
+}
+
+.close {
+  background-color: inherit;
+  font-size: 18px;
+  position: absolute;
+  top: 130px;
+  right: 10px;
 }

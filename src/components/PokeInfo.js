@@ -5,13 +5,17 @@ import PokeDetail from './PokeDetail';
 import Tabs from './Tabs';
 
 const PokeInfo = ({ pokemon, pokemonForms = [], pokemonSpecies, cry }) => {
-  if (!pokemon.id) {
-    return (
-      <section className="pokemon-info">
-        <div className="sprite"></div>
-        <div className="data-wrapper"></div>
-      </section>
-    );
+  var isOpen;
+ isOpen = pokemon.id ?
+    true : false
+  if (!isOpen) {
+    return null;
+  }
+
+  const openClose = () => {
+    isOpen = isOpen ? false : true;
+    console.log('isOpen :', isOpen);
+    
   }
 
   const appearances = ['Normal', 'Shiny'];
@@ -86,11 +90,15 @@ const PokeInfo = ({ pokemon, pokemonForms = [], pokemonSpecies, cry }) => {
       return { label: formName, tabContent: PokemonThing };
     });
 
+    console.log('isOpen :', isOpen);
+
   return (
-    <section className="pokemon-info" key={pokemon}>
+    <section className="pokemon-info" key={pokemon} style={Object.assign({}, { display: ( isOpen ? 'inline-block' : 'none' ) }) }>
       <div className="variety-tabs">
         <Tabs tabItems={tabItems} />
       </div>
+      <br></br>
+      <button className="close" onClick={() => openClose()}>X</button>
     </section>
   );
 };
