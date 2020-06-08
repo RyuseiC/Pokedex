@@ -18,13 +18,11 @@ const PokeDetail = ({ pokemon, pokemonSpecies }) => {
     speed,
   } = pokemon;
 
-  console.log('pokemonSpecies :', pokemonSpecies);
   var description = '';
   const descriptions = pokemonSpecies.flavor_text_entries;
 
   for (let i = 0; i < descriptions.length; i++) {
     if (descriptions[i].language.name === 'en') {
-      console.log('flavor_text_entry :', descriptions[i].flavor_text);
       description += descriptions[i].flavor_text;
       break;
     }
@@ -185,7 +183,6 @@ const PokeDetail = ({ pokemon, pokemonSpecies }) => {
   var abilityList = [];
   for (let i = 0; i < abilities.length; i++) {
     abilityList[i] = abilities[i].ability.name;
-    console.log('abilities[i].name :', abilities[i].ability.name);
   }
 
   return (

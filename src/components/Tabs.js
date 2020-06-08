@@ -3,8 +3,6 @@ import "./styles/Tabs.css";
 
 const Tabs = ({ tabItems = [] }) => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  console.log('tabItems :', tabItems);
-  console.log('selectedTabIndex :', selectedTabIndex);
 
   if (tabItems.length <= selectedTabIndex && tabItems.length !== 0) {
     setSelectedTabIndex(0);
