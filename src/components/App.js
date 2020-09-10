@@ -102,7 +102,7 @@ class App extends Component {
         <a target="_blank" rel="noopener noreferrer" href="https://github.com/RyuseiC/Pokedex">
           About
         </a>
-        <header>Pokédex</header>
+        <header>React Pokédex</header>
         <PokeSearch onChange={this.onPokeSearchChange} />
         <PokeSort onChange={this.onPokeSortChange} />
         <br></br>
