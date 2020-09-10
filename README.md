@@ -2,7 +2,7 @@ Check it out by clicking [here](https://ryuseic-pokedex.netlify.app/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-![Alt text](https://github.com/RyuseiC/Pokedex/raw/master/assets/pokedexPreview.png)
+![Alt text](https://github.com/RyuseiC/Pokedex/raw/master/src/assets/pokedexPreview.png)
 
 ## Available Scripts
 
